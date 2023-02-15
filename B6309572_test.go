@@ -15,7 +15,25 @@ type Costumer struct {
 	Email      string `valid:"email"`
 }
 
-func TestPaymentNumber(t *testing.T) {
+func TestCostumer(t *testing.T) {
+	g := NewGomegaWithT(t)
+
+	Costumer1 := Costumer{
+		Name:       "asd",
+		CostumerID: "501222",
+		Email:      "fam@gmail.com",
+	}
+
+	ok, err := govalidator.ValidateStruct(Costumer1)
+
+	g.Expect(ok).ToNot(BeTrue())
+
+	g.Expect(err).ToNot(BeNil())
+
+	g.Expect(err.Error()).To(Equal("Name not blank"))
+}
+
+func TestCostumername(t *testing.T) {
 	g := NewGomegaWithT(t)
 
 	Costumer1 := Costumer{
@@ -31,22 +49,4 @@ func TestPaymentNumber(t *testing.T) {
 	g.Expect(err).ToNot(BeNil())
 
 	g.Expect(err.Error()).To(Equal("Name not blank"))
-}
-
-func TestEmail(t *testing.T) {
-	g := NewGomegaWithT(t)
-
-	Costumer2 := Costumer{
-		Name:       "dfg",
-		CostumerID: "LDB",
-		Email:      "fam@gmail.com", //ผิด
-	}
-
-	ok, err := govalidator.ValidateStruct(Costumer2)
-
-	g.Expect(ok).ToNot(BeTrue())
-
-	g.Expect(err).ToNot(BeNil())
-
-	g.Expect(err.Error()).To(Equal("NAme not blank"))
 }
